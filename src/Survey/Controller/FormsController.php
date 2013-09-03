@@ -17,7 +17,7 @@
 namespace Survey\Controller;
 
 use Rubedo\Services\Manager;
-
+use Rubedo\Blocks\Controller\AbstractController;
 /**
  *
  * @author nduvollet
@@ -49,13 +49,13 @@ class FormsController extends AbstractController
     {
         parent::init();
         
-        $this->_blockConfig = $this->getParam('block-config', array());
+        $this->_blockConfig = $this->getParamFromQuery('block-config', array());
         $this->_formId = $this->_blockConfig["formId"];
         if (! isset($this->_formId)) {
             return;
         }
         $this->_form = Manager::getService('Forms')->findById($this->_formId);
-        if (! $this->getRequest()->isPost() && $this->getParam("getNew") == 1) {
+        if (! $this->getRequest()->isPost() && $this->getParamFromQuery("getNew") == 1) {
             if ($this->_form["uniqueAnswer"] == "false") {
                 $this->_new();
                 return;
@@ -77,11 +77,12 @@ class FormsController extends AbstractController
      */
     public function indexAction ()
     {
+        $this->init();
         if (! isset($this->_formId)) {
             $this->_sendResponse(array(), "block.html.twig");
             return;
         }
-        $output = $this->getAllParams();
+        $output = $this->getParamFromQuery();
         // recupération de paramètre éventuels de la page en cours
         $currentFormPage = $this->formsSessionArray[$this->_formId]['currentFormPage'];
         
@@ -119,7 +120,7 @@ class FormsController extends AbstractController
                     }
                     continue;
                 }
-                $this->_validInput($field, $this->getParam($field['id']));
+                $this->_validInput($field, $this->getParamFromQuery($field['id']));
             }
             foreach ($this->_form["formPages"][$currentFormPage]["elements"] as $field) {
                 foreach ($field["itemConfig"]["conditionals"] as $condition) {
@@ -153,7 +154,7 @@ class FormsController extends AbstractController
             }
         }
         // Si on demande la page précédente
-        if (! $this->getRequest()->isPost() && $this->getParam("getPrevious") == 1) {
+        if (! $this->getRequest()->isPost() && $this->getParamFromQuery("getPrevious") == 1) {
             if (is_array($this->_formResponse["lastAnsweredPage"]) && count($this->_formResponse["lastAnsweredPage"]) > 0) {
                 $pageToBeSet = array_pop($this->_formResponse["lastAnsweredPage"]);
             } else {
@@ -166,7 +167,7 @@ class FormsController extends AbstractController
             $output['values'] = $this->_formResponse["data"];
         }
         if ($this->_hasError) {
-            $output['values'] = $this->getAllParams();
+            $output['values'] = $this->getParamFromQuery();
             $output['errors'] = $this->_errors;
             $this->_computeNewPage();
         } else {
@@ -522,7 +523,7 @@ class FormsController extends AbstractController
 
     protected function _updateResponse ()
     {
-        if ($this->_formResponse["status"] != 'finished' || $this->getParam("getNew") == 1) {
+        if ($this->_formResponse["status"] != 'finished' || $this->getParamFromQuery("getNew") == 1) {
             
             // mise à jour du status de la réponse
             $this->_formResponse["status"] = "pending";
