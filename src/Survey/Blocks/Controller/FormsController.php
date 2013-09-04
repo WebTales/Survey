@@ -253,7 +253,7 @@ class FormsController extends AbstractController
         // affichage de la page
         $output['currentFormPage'] = $this->formsSessionArray[$this->_formId]['currentFormPage'];
         $output["progression"] = $this->_blockConfig["progression"];
-        $template = Manager::getService('FrontOfficeTemplates')->getFileThemePath("blocks/form.html.twig");
+        $template = Manager::getService('FrontOfficeTemplates')->getFileThemePath("@Survey/blocks/form.html.twig");
         $css = array(
             '/components/jquery/jqueryui/themes/base/minified/jquery-ui.min.css'
         );

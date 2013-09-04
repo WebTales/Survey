@@ -48,5 +48,10 @@ return array(
                 )
             )
         )
+    ),
+    'templates' => array(
+        'workspaces' => array(
+            'Survey' => realpath(__DIR__ . '/../templates')
+        )
     )
 );
