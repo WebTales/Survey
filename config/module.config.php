@@ -52,6 +52,9 @@ return array(
     'templates' => array(
         'workspaces' => array(
             'Survey' => realpath(__DIR__ . '/../templates')
+        ),
+        'overrideThemes' => array(
+            'cerulean' =>  realpath(__DIR__ . '/../themes-override/cerulean')
         )
     )
 );
