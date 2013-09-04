@@ -1,0 +1,1 @@
+Here you can set some twig file that would override cerulean theme
