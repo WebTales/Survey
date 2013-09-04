@@ -54,7 +54,13 @@ return array(
             'Survey' => realpath(__DIR__ . '/../templates')
         ),
         'overrideThemes' => array(
-            'cerulean' =>  realpath(__DIR__ . '/../themes-override/cerulean')
+            'cerulean' => realpath(__DIR__ . '/../themes-override/cerulean')
+        )
+    ),
+    'appExtension' => array(
+        'survey' => array(
+            'basePath' => realpath(__DIR__ . '/../app-extension').'/survey',
+            'definitionFile' => realpath(__DIR__ . '/../app-extension').'/survey.json'
         )
     )
 );
