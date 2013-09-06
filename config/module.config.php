@@ -1,8 +1,5 @@
 <?php
 return array(
-    'session' => array(
-        'name' => 'survey'
-    ),
     'localisationfiles' => array(
         'module/Survey/data/locale/languagekey/survey.json'
     ),
