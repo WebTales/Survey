@@ -59,8 +59,14 @@ return array(
     ),
     'appExtension' => array(
         'survey' => array(
-            'basePath' => realpath(__DIR__ . '/../app-extension').'/survey',
-            'definitionFile' => realpath(__DIR__ . '/../app-extension').'/survey.json'
+            'basePath' => realpath(__DIR__ . '/../app-extension') . '/survey',
+            'definitionFile' => realpath(__DIR__ . '/../app-extension') . '/survey.json'
+        )
+    ),
+    'service_manager' => array(
+        'invokables' => array(
+            'Forms' => 'Survey\\Service\\Forms',
+            'FormsResponses' => 'Survey\\Service\\FormsResponses'
         )
     )
 );
