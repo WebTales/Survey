@@ -438,6 +438,50 @@ Ext.define('Rubedo.controller.FormsController', {
         });
 
     },
+    onLaunch:function(){
+    	var task = new Ext.util.DelayedTask(function(){
+    	var userLanguage=Ext.getStore("CurrentUserDataStore").getRange()[0].get("language");
+    	if (Ext.isEmpty(userLanguage)){
+    	    userLanguage="en";
+    	}
+    	if (!Ext.isEmpty(Ext.getStore("FormFieldTypesStore"))){
+    	    Ext.Ajax.request({
+    	        url: 'app/appextensions/survey/localization/generic/formFieldTypes.json',
+    	        params: {
+
+    	        },
+    	        success: function(response){
+    	            var genericStructureString = response.responseText;
+    	            Ext.Ajax.request({
+    	                url: 'app/appextensions/survey/localization/locale/'+userLanguage+'/formFieldLabels.json',
+    	                params: {
+
+    	                },
+    	                success: function(response){
+    	                    var localisedLabels =Ext.JSON.decode(response.responseText);
+    	                    Ext.Object.each(localisedLabels, function(key, value, myself) {
+    	                        replacer=new RegExp(key, 'g');
+    	                        genericStructureString=genericStructureString.replace(replacer, value);
+    	                    });
+    	                    var decodedFT=Ext.JSON.decode(genericStructureString);
+    	                    Ext.getStore("FormFieldTypesStore").removeAll();
+    	                    Ext.getStore("FormFieldTypesStore").loadData(decodedFT);
+
+
+    	                },
+    	                failure:function(){
+    	                    console.log("Form Fields store could not be localised for this language");
+    	                }
+    	            });
+    	        },
+    	        failure:function(){
+    	            console.log("Form Fields store could not retrieve generic structure");
+    	        }
+    	    });
+    	}
+    	});
+    	task.delay(1000);
+    },
 
     init: function(application) {
         this.control({
