@@ -47,7 +47,7 @@ return array(
         )
     ),
     'templates' => array(
-        'workspaces' => array(
+        'namespaces' => array(
             'Survey' => realpath(__DIR__ . '/../templates')
         ),
         'overrideThemes' => array(

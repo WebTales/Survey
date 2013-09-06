@@ -261,7 +261,7 @@ class FormsController extends AbstractController
             '/components/jquery/jqueryui/ui/minified/jquery-ui.min.js',
             '/components/jquery/jqueryui/ui/minified/i18n/jquery.ui.datepicker-fr.min.js',
             
-            '/templates/' . Manager::getService('FrontOfficeTemplates')->getFileThemePath("js/forms.js")
+            $this->getRequest()->getBasePath() . '/' . Manager::getService('FrontOfficeTemplates')->getFileThemePath("@Survey/js/forms.js")
         );
         return $this->_sendResponse($output, $template, $css, $js);
     }
