@@ -123,25 +123,27 @@ class FormsController extends AbstractController
                 $this->_validInput($field, $this->getParamFromQuery($field['id']));
             }
             foreach ($this->_form["formPages"][$currentFormPage]["elements"] as $field) {
-                foreach ($field["itemConfig"]["conditionals"] as $condition) {
-                    
-                    switch ($condition["operator"]) {
-                        case "=":
-                            $conditionArray = $this->_checkCondition($condition);
-                            if (in_array(false, $conditionArray))                             // si condition
-                                                                  // pas remplie
-                            {
-                                unset($this->_errors[$field["id"]]);
-                                unset($this->_formResponse["data"][$field["id"]]);
-                            }
-                            break;
-                        case "≠":
-                            $conditionArray = $this->_checkCondition($condition);
-                            if (in_array(true, $conditionArray)) {
-                                unset($this->_errors[$field["id"]]);
-                                unset($this->_formResponse["data"][$field["id"]]);
-                            }
-                            break;
+                if (isset($field["itemConfig"]["conditionals"])){
+                    foreach ($field["itemConfig"]["conditionals"] as $condition) {
+                        
+                        switch ($condition["operator"]) {
+                            case "=":
+                                $conditionArray = $this->_checkCondition($condition);
+                                if (in_array(false, $conditionArray))                             // si condition
+                                                                      // pas remplie
+                                {
+                                    unset($this->_errors[$field["id"]]);
+                                    unset($this->_formResponse["data"][$field["id"]]);
+                                }
+                                break;
+                            case "≠":
+                                $conditionArray = $this->_checkCondition($condition);
+                                if (in_array(true, $conditionArray)) {
+                                    unset($this->_errors[$field["id"]]);
+                                    unset($this->_formResponse["data"][$field["id"]]);
+                                }
+                                break;
+                        }
                     }
                 }
             }
@@ -155,7 +157,7 @@ class FormsController extends AbstractController
         }
         // Si on demande la page précédente
         if (! $this->getRequest()->isPost() && $this->getParamFromQuery("getPrevious") == 1) {
-            if (is_array($this->_formResponse["lastAnsweredPage"]) && count($this->_formResponse["lastAnsweredPage"]) > 0) {
+            if (isset($this->_formResponse["lastAnsweredPage"]) && is_array($this->_formResponse["lastAnsweredPage"]) && count($this->_formResponse["lastAnsweredPage"]) > 0) {
                 $pageToBeSet = array_pop($this->_formResponse["lastAnsweredPage"]);
             } else {
                 $pageToBeSet = 0;
