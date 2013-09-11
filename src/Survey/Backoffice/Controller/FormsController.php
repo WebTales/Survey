@@ -64,8 +64,7 @@ class FormsController extends DataAccessController
      */
     public function getCsvAction ()
     {
-        throw new \Rubedo\Exceptions\Server('no yet converted to ZF2');
-        $formId = $this->params()->fromPost('form-id');
+        $formId = $this->params()->fromQuery('form-id');
         if (! $formId) {
             throw new \Rubedo\Exceptions\User('This action needs a form id as argument.', "Exception11");
         }
@@ -189,19 +188,15 @@ class FormsController extends DataAccessController
             
             fputcsv($csvResource, $csvLine, ';');
         }
-        $this->_helper->layout->disableLayout();
-        $this->_helper->viewRenderer->setNoRender();
-        
-        $this->getResponse()->clearBody();
-        $this->getResponse()->clearHeaders();
-        $this->getResponse()->setHeader('Content-Type', 'application/csv');
-        $this->getResponse()->setHeader('Content-Disposition', 'attachment; filename="' . $fileName . '"');
-        $this->getResponse()->sendHeaders();
-        
-        fclose($csvResource);
-        
         $content = file_get_contents($filePath);
-        echo utf8_decode($content);
-        die();
+        $response = $this->getResponse();
+        $headers = $response->getHeaders();
+        $headers->addHeaderLine('Content-Type', 'text/csv');
+        $headers->addHeaderLine('Content-Disposition', "attachment; filename=\"$fileName\"");
+        $headers->addHeaderLine('Accept-Ranges', 'bytes');
+        $headers->addHeaderLine('Content-Length', strlen($content));
+        
+        $response->setContent(utf8_decode($content));
+        return $response;
     }
 }
