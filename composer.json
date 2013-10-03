@@ -1,7 +1,8 @@
 {
 	"name": "webtales/survey",
 	"require": {
-		"php": ">=5.3.0"
+		"php": ">=5.3.0",
+		"zendframework/zendservice-amazon": "2.0.2"
 	},
 	"autoload": {
         "classmap": ["src/Survey"]
