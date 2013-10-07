@@ -6,6 +6,7 @@ return array(
     'blocksDefinition' => array(
         'form' => array(
             'controller' => 'Survey\\Blocks\\Controller\\Forms',
+            'maxlifeTime' => -1,
             'definitionFile' => realpath(__DIR__ . "/blocks/") . '/form.json'
         )
     ),
