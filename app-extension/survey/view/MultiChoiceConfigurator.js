@@ -115,6 +115,19 @@ Ext.define('Rubedo.view.MultiChoiceConfigurator', {
                             minValue: 1
                         },
                         {
+                            xtype:"combobox",
+                            labelWidth: 140,
+                            anchor: '100%',
+                            name: 'correctAnswer',
+                            fieldLabel: 'Réponse correcte',
+                            store: 'MultiChoiceOptionsStore',
+                            queryMode: 'local',
+                            forceSelection:true,
+                            valueField:'inputValue',
+                            displayField:'boxLabel'
+
+                        },
+                        {
                             xtype: 'radiogroup',
                             localiserId: 'answerTypeCheckboxGroup',
                             fieldLabel: 'Réponse',
