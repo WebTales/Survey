@@ -479,6 +479,75 @@ Ext.define('Rubedo.controller.FormsController', {
     	        }
     	    });
     	}
+        var newField={
+            "type": "Quizz",
+            "cType": "Rubedo.view.FormPickerField",
+            "openWindow": "",
+            "description": "",
+            "config": {
+                "name": "quizz",
+                "fieldLabel": "Quizz",
+                "allowBlank": true,
+                "localizable": false,
+                "searchable": false,
+                "notAnalyzed":false,
+                "returnInSearch":false,
+                "useAsFacet":false,
+                "facetOperator":"AND",
+                "multivalued": false,
+                "tooltip": "",
+                "labelSeparator": " "
+            },
+            "configFields": [
+                {
+                    "type": "Ext.form.field.Text",
+                    "config": {
+                        "fieldLabel": "Nom",
+                        "name": "name",
+                        "vtype": "alphanum",
+                        "allowBlank": false
+                    }
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "config": {
+                        "fieldLabel": "Label",
+                        "name": "fieldLabel",
+                        "allowBlank": false
+                    }
+                },
+                {
+                    "type": "Ext.form.field.Text",
+                    "config": {
+                        "fieldLabel": "Tooltip",
+                        "name": "tooltip",
+                        "allowBlank": true
+                    }
+                },
+
+                {
+                    "type": "Ext.form.field.Checkbox",
+                    "config": {
+                        "fieldLabel": "Facultatif",
+                        "name": "allowBlank"
+                    }
+                },
+                {
+                    "type": "Ext.form.field.Checkbox",
+                    "config": {
+                        "fieldLabel": "Multivalué",
+                        "name": "multivalued"
+                    }
+                }
+            ],
+            "id": "532186ebf05c1d041a000002",
+            "category": "Formulaires",
+            "protoId": ""
+        };
+        Ext.getStore("TypesChampsDataStore").add(newField);
+
+
+
     	});
     	task.delay(1000);
     },
