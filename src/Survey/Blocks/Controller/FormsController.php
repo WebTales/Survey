@@ -100,6 +100,8 @@ class FormsController extends AbstractController
             }
             /* Verification des champs envoyés */
             $this->_lastAnsweredPage = $this->formsSessionArray[$this->_formId]['currentFormPage'];
+            if (!isset($this->_form["formPages"][$currentFormPage]["elements"]))
+                $this->_form["formPages"][$currentFormPage]["elements"] = array();
             foreach ($this->_form["formPages"][$currentFormPage]["elements"] as $field) {
                 if ($field['itemConfig']['fType'] == 'richText') {
                     continue;
@@ -254,7 +256,7 @@ class FormsController extends AbstractController
         
         // affichage de la page
         $output['currentFormPage'] = $this->formsSessionArray[$this->_formId]['currentFormPage'];
-        $output["progression"] = $this->_blockConfig["progression"];
+        $output["progression"] = !empty($this->_blockConfig["progression"])?$this->_blockConfig["progression"]:null;
         $template = Manager::getService('FrontOfficeTemplates')->getFileThemePath("@Survey/blocks/form.html.twig");
         $css = array(
             '/components/jquery/jqueryui/themes/base/minified/jquery-ui.min.css'
