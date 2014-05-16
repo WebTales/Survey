@@ -72,7 +72,7 @@ class FormsController extends DataAccessController
         $form = Manager::getService('Forms')->findById($formId);
         
         $displayQnb = $this->params()->fromPost('display-qnb', false);
-        $fileTitle = Manager::getService('Pages')->filterUrl($form['title']); // $this->_filterName($form['title']);
+        $fileTitle = "export";
         
         $fileName = $fileTitle . '_' . $formId . '_' . date('Ymd') . '.csv';
         $filePath = sys_get_temp_dir() . '/' . $fileName;
