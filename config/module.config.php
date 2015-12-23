@@ -5,14 +5,12 @@ return array(
     ),
     'blocksDefinition' => array(
         'form' => array(
-            'controller' => 'Survey\\Blocks\\Controller\\Forms',
             'maxlifeTime' => -1,
             'definitionFile' => realpath(__DIR__ . "/blocks/") . '/form.json'
         )
     ),
     'controllers' => array(
         'invokables' => array(
-            'Survey\\Blocks\\Controller\\Forms' => 'Survey\\Blocks\\Controller\\FormsController',
             'Survey\\Backoffice\\Controller\\Forms' => 'Survey\\Backoffice\\Controller\\FormsController'
         )
     ),
@@ -45,14 +43,6 @@ return array(
                     )
                 )
             )
-        )
-    ),
-    'templates' => array(
-        'namespaces' => array(
-            'Survey' => realpath(__DIR__ . '/../templates')
-        ),
-        'overrideThemes' => array(
-            'cerulean' => realpath(__DIR__ . '/../themes-override/cerulean')
         )
     ),
     'appExtension' => array(
