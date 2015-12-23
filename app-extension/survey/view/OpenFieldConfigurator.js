@@ -22,7 +22,6 @@ Ext.define('Rubedo.view.OpenFieldConfigurator', {
     ],
 
     localiserId: 'formOpenQuestionConfigurator',
-    height: 597,
     id: 'OpenFieldConfigurator',
     width: 736,
     resizable: false,
@@ -66,7 +65,6 @@ Ext.define('Rubedo.view.OpenFieldConfigurator', {
                 {
                     xtype: 'form',
                     border: 0,
-                    height: 440,
                     bodyPadding: 10,
                     title: '',
                     items: [
