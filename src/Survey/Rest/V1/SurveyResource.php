@@ -20,6 +20,7 @@ namespace Survey\Rest\V1;
 
 use Rubedo\Services\Manager;
 use RubedoAPI\Entities\API\Definition\VerbDefinitionEntity;
+use RubedoAPI\Entities\API\Definition\FilterDefinitionEntity;
 use RubedoAPI\Exceptions\APIEntityException;
 use Rubedo\Collection\AbstractLocalizableCollection;
 use RubedoAPI\Rest\V1\AbstractResource;
@@ -49,9 +50,23 @@ class SurveyResource extends AbstractResource
      * @param $id
      * @return array
      */
-    public function getEntityAction($id)
+    public function getEntityAction($id,$params)
     {
-        die("test");
+        $survey=Manager::getService("Forms")->findById($id);
+        if (empty($survey)) {
+            throw new APIEntityException('Survey not found', 404);
+        }
+        $currentTime = $this->getCurrentTimeService()->getCurrentTime();
+        if(isset($survey["openingDate"])&&$survey["openingDate"]&&$survey["openingDate"]!=""&&$currentTime< (int) $survey["openingDate"]){
+            throw new APIEntityException('Survey not yet started', 400);
+        }
+        if(isset($survey["closingDate"])&&$survey["closingDate"]&&$survey["closingDate"]!=""&&$currentTime> (int) $survey["closingDate"]){
+            throw new APIEntityException('Survey closed', 400);
+        }
+        return([
+            "success"=>true,
+            "survey"=>$survey
+        ]);
     }
 
 
@@ -77,6 +92,10 @@ class SurveyResource extends AbstractResource
     private function defineGetEntity(VerbDefinitionEntity &$definition)
     {
         $definition
-            ->setDescription('Get survey');
+            ->setDescription('Get survey')->addOutputFilter(
+                (new FilterDefinitionEntity())
+                    ->setKey('survey')
+                    ->setDescription('Survey')
+            );
     }
 }
