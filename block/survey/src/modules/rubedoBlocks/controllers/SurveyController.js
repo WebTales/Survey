@@ -11,4 +11,14 @@ angular.module("rubedoBlocks").lazy.controller('SurveyController',['$scope','$ht
             }
         );
     }
+    me.startSurvey=function(){
+        me.currentPage=me.survey.formPages[0];
+        me.currentPageIndex=0;
+    };
+    me.setPage=function(page,index){
+        if(page.id!=me.currentPage.id){
+            me.currentPage=page;
+            me.currentPageIndex=index;
+        }
+    };
 }]);

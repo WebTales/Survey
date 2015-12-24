@@ -1,10 +1,26 @@
 <div ng-controller="SurveyController as surveyCtrl">
     <div  ng-if="surveyCtrl.survey" class="panel panel-default">
         <!-- Default panel contents -->
-        <div class="panel-heading">{{surveyCtrl.survey.title}}</div>
+        <div class="panel-heading">
+            <h4 ng-if="!surveyCtrl.currentPage">{{surveyCtrl.survey.title}}</h4>
+            <div class="btn-group btn-group-justified" role="group" ng-if="surveyCtrl.currentPage">
+                <div class="btn-group" role="group" ng-repeat="page in surveyCtrl.survey.formPages">
+                    <button type="button" class="btn btn-default"
+                            ng-class="{'btn-primary':page.id==surveyCtrl.currentPage.id,'disabled':$index>surveyCtrl.currentPageIndex}"
+                            ng-click="surveyCtrl.setPage(page,$index)">
+                        {{page.itemConfig.label}}</button>
+                </div>
+
+            </div>
+        </div>
         <div class="panel-body" ng-if="!surveyCtrl.currentPage">
             <p>{{surveyCtrl.survey.description}}</p>
+            <button class="btn btn-primary" ng-if="surveyCtrl.survey.formPages[0]" ng-click="surveyCtrl.startSurvey()">Démarrer le questionnaire</button>
         </div>
+        <div class="panel-body" ng-if="surveyCtrl.currentPage">
 
+
+
+        </div>
     </div>
 </div>
