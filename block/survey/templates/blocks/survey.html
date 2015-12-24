@@ -23,10 +23,17 @@
                     <rubedo-custom-template ng-if="element.itemConfig.fType=='richText'" template="{{element.itemConfig.html}}"></rubedo-custom-template>
                     <rubedo-custom-template ng-if="element.itemConfig.fType!='richText'&&element.itemConfig.label&&element.itemConfig.fieldType" template="{{element.itemConfig.label}}"></rubedo-custom-template>
                     <div class="form-group" ng-if="element.itemConfig.fType=='openQuestion'&&element.itemConfig.fieldType">
-                        <input type="text" name="{{element.id}}" class="form-control" ng-model="fieldEntity[element.id]" ng-required="element.itemConfig.fieldConfig.mandatory" >
+                        <input ng-if="element.itemConfig.fieldType=='textfield'" type="text" name="{{element.id}}" class="form-control" ng-model="fieldEntity[element.id]" ng-required="element.itemConfig.fieldConfig.mandatory" >
+                        <input ng-if="element.itemConfig.fieldType=='numberfield'" type="number" name="{{element.id}}" class="form-control" ng-model="fieldEntity[element.id]" ng-required="element.itemConfig.fieldConfig.mandatory" >
+                        <input ng-if="element.itemConfig.fieldType=='datefield'" type="date" name="{{element.id}}" class="form-control" ng-model="fieldEntity[element.id]" ng-required="element.itemConfig.fieldConfig.mandatory" >
+                        <input ng-if="element.itemConfig.fieldType=='timefield'" type="time" name="{{element.id}}" class="form-control" ng-model="fieldEntity[element.id]" ng-required="element.itemConfig.fieldConfig.mandatory" >
+                        <textarea ng-if="element.itemConfig.fieldType=='textareafield'" name="{{element.id}}" class="form-control" ng-model="fieldEntity[element.id]" ng-required="element.itemConfig.fieldConfig.mandatory"></textarea>
                     </div>
                 </div>
-                <button class="btn btn-primary pull-right" type="submit">Valider</button>
+                <button class="btn btn-primary pull-right" type="submit">
+                    <span ng-if="surveyCtrl.hasNext()">Suivant</span>
+                    <span ng-if="!surveyCtrl.hasNext()">Valider</span>
+                </button>
             </form>
 
 

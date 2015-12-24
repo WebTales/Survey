@@ -22,6 +22,14 @@ angular.module("rubedoBlocks").lazy.controller('SurveyController',['$scope','$ht
         }
     };
     me.doNext=function(){
-        console.log("test");
+        if(me.currentPageIndex<me.survey.formPages.length-1){
+            me.currentPageIndex=me.currentPageIndex+1;
+            me.currentPage=me.survey.formPages[me.currentPageIndex];
+        } else {
+            console.log($scope.fieldEntity);
+        }
     };
+    me.hasNext=function(){
+        return(me.currentPageIndex<me.survey.formPages.length-1);
+    }
 }]);
