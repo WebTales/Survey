@@ -56,5 +56,8 @@ return array(
             'Forms' => 'Survey\\Service\\Forms',
             'FormsResponses' => 'Survey\\Service\\FormsResponses'
         )
-    )
+    ),
+    'namespaces_api' => array(
+        'Survey',
+    ),
 );
