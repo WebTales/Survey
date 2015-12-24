@@ -21,4 +21,7 @@ angular.module("rubedoBlocks").lazy.controller('SurveyController',['$scope','$ht
             me.currentPageIndex=index;
         }
     };
+    me.doNext=function(){
+        console.log("test");
+    };
 }]);
