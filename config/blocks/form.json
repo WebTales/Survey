@@ -16,28 +16,6 @@
 								"fieldLabel":"#ext-gen1179#",
 								"name":"formId"
 							}
-						},
-						{
-							"type":"Ext.form.field.ComboBox",
-							"isAutoStored":true,
-							"autoStoreData":[
-								{
-									"value":0,
-									"label":"#ext-gen1185#"
-								},
-								{
-									"value":1,
-									"label":"#ext-gen1186#"
-								}
-							],
-							"config":{
-								"fieldLabel":"#ext-gen1184#",
-								"name":"progression",
-								"editable":false,
-								"forceSelection":true,
-								"queryMode":"local",
-								"value":0
-							}
 						}
 					]
 				}
@@ -47,7 +25,6 @@
 			]
 		},
 		"configBloc":{
-			"progression":0
 		}
 	},
 	"category":"#ext-gen1150#",
