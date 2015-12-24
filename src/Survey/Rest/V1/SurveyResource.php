@@ -22,9 +22,7 @@ use Rubedo\Services\Manager;
 use RubedoAPI\Entities\API\Definition\VerbDefinitionEntity;
 use RubedoAPI\Entities\API\Definition\FilterDefinitionEntity;
 use RubedoAPI\Exceptions\APIEntityException;
-use Rubedo\Collection\AbstractLocalizableCollection;
 use RubedoAPI\Rest\V1\AbstractResource;
-use Zend\Debug\Debug;
 
 
 /**
