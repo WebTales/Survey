@@ -60,4 +60,11 @@ return array(
     'namespaces_api' => array(
         'Survey',
     ),
+    'extension_paths' => array(
+        'survey' => array(
+            'path' => realpath(__DIR__ . '/../block/survey'),
+            'css' => array(),
+            'js' => array('js/survey.js'),
+        ),
+    ),
 );
