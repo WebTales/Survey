@@ -62,16 +62,33 @@ angular.module("rubedoBlocks").lazy.controller('SurveyController',['$scope','$ht
                     if (angular.isObject(cdtVal)){
                         cdtVal=cdtVal.value;
                     }
-                    if(angular.isString(cdtVal)){
-                        cdtVal="'"+cdtVal+"'";
+                    if (angular.isArray(cdtVal)){
+                        var intermed=false;
+                        angular.forEach(cdtVal,function(cdtSubval){
+                            if(angular.isString(cdtSubval)){
+                                cdtSubval="'"+cdtSubval+"'";
+                            }
+                            var op=angular.copy(cdt.operator);
+                            if(op=="="){
+                                op="==";
+                            }
+                            intermed=intermed||eval(value+" "+op+" "+cdtSubval)
+                        });
+                        res=res&&intermed;
+
+                    } else {
+                        if(angular.isString(cdtVal)){
+                            cdtVal="'"+cdtVal+"'";
+                        }
+                        var op=angular.copy(cdt.operator);
+                        if(op=="="){
+                            op="==";
+                        }
+                        if(!eval(value+" "+op+" "+cdtVal)){
+                            res=false;
+                        }
                     }
-                    var op=angular.copy(cdt.operator);
-                    if(op=="="){
-                        op="==";
-                    }
-                    if(!eval(value+" "+op+" "+cdtVal)){
-                        res=false;
-                    }
+
                 }
             });
         }
