@@ -1,5 +1,10 @@
 <div ng-controller="SurveyController as surveyCtrl">
-    <div ng-if="surveyCtrl.survey">
-        {{surveyCtrl.survey}}
+    <div  ng-if="surveyCtrl.survey" class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">{{surveyCtrl.survey.title}}</div>
+        <div class="panel-body" ng-if="!surveyCtrl.currentPage">
+            <p>{{surveyCtrl.survey.description}}</p>
+        </div>
+
     </div>
 </div>
