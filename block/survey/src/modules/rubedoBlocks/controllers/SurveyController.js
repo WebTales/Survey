@@ -48,5 +48,33 @@ angular.module("rubedoBlocks").lazy.controller('SurveyController',['$scope','$ht
     };
     me.hasNext=function(){
         return(me.currentPageIndex<me.survey.formPages.length-1);
-    }
+    };
+    me.handleConditionals=function(conditionals){
+        var res=true;
+        if(conditionals&&angular.isArray(conditionals)){
+            angular.forEach(conditionals,function(cdt){
+                if(res){
+                    var value=angular.copy($scope.fieldEntity[cdt.field]);
+                    if(angular.isString(value)){
+                        value="'"+value+"'";
+                    }
+                    var cdtVal=angular.copy(cdt.value);
+                    if (angular.isObject(cdtVal)){
+                        cdtVal=cdtVal.value;
+                    }
+                    if(angular.isString(cdtVal)){
+                        cdtVal="'"+cdtVal+"'";
+                    }
+                    var op=angular.copy(cdt.operator);
+                    if(op=="="){
+                        op="==";
+                    }
+                    if(!eval(value+" "+op+" "+cdtVal)){
+                        res=false;
+                    }
+                }
+            });
+        }
+        return(res);
+    };
 }]);
