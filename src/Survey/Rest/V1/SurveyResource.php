@@ -69,6 +69,30 @@ class SurveyResource extends AbstractResource
         ]);
     }
 
+    public function postEntityAction($id,$params)
+    {
+        $survey=Manager::getService("Forms")->findById($id);
+        if (empty($survey)) {
+            throw new APIEntityException('Survey not found', 404);
+        }
+        $currentTime = $this->getCurrentTimeService()->getCurrentTime();
+        if(isset($survey["openingDate"])&&$survey["openingDate"]&&$survey["openingDate"]!=""&&$currentTime< (int) $survey["openingDate"]){
+            throw new APIEntityException('Survey not yet started', 400);
+        }
+        if(isset($survey["closingDate"])&&$survey["closingDate"]&&$survey["closingDate"]!=""&&$currentTime> (int) $survey["closingDate"]){
+            throw new APIEntityException('Survey closed', 400);
+        }
+        $surveyResult=[
+            "status"=>$params["survey"]["status"],
+            "data"=>$params["survey"]["data"],
+            "formId"=>(string) $survey["id"]
+        ];
+        Manager::getService("FormsResponses")->create($surveyResult);
+        return([
+            "success"=>true,
+        ]);
+    }
+
 
     /**
      * Define the resource
@@ -81,6 +105,8 @@ class SurveyResource extends AbstractResource
             ->setDescription('Handle surveys')
             ->editVerb('get', function (VerbDefinitionEntity &$definition) {
                 $this->defineGetEntity($definition);
+            })->editVerb('post', function (VerbDefinitionEntity &$definition) {
+                $this->definePostEntity($definition);
             });
     }
 
@@ -95,6 +121,17 @@ class SurveyResource extends AbstractResource
             ->setDescription('Get survey')->addOutputFilter(
                 (new FilterDefinitionEntity())
                     ->setKey('survey')
+                    ->setDescription('Survey')
+            );
+    }
+
+    private function definePostEntity(VerbDefinitionEntity &$definition)
+    {
+        $definition
+            ->setDescription('Post survey result')->addInputFilter(
+                (new FilterDefinitionEntity())
+                    ->setKey('survey')
+                    ->setRequired(true)
                     ->setDescription('Survey')
             );
     }

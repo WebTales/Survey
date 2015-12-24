@@ -27,9 +27,23 @@ angular.module("rubedoBlocks").lazy.controller('SurveyController',['$scope','$ht
             me.currentPageIndex=me.currentPageIndex+1;
             me.currentPage=me.survey.formPages[me.currentPageIndex];
         } else {
-            console.log($scope.fieldEntity);
-            me.currentPage=false;
-            me.isFinished=true;
+            var results=angular.copy($scope.fieldEntity);
+            var payload={
+                status:"finished",
+                data:results
+            };
+            $http({
+                url:"/api/v1/survey/"+config.formId,
+                method:"POST",
+                data:{
+                    survey:payload
+                }
+            }).then(
+                function(responseFinish){
+                    me.currentPage=false;
+                    me.isFinished=true;
+                }
+            );
         }
     };
     me.hasNext=function(){
